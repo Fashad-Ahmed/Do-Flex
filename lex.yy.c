@@ -362,18 +362,17 @@ static char *yy_last_accepting_cpos;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "filename.l"
+#line 1 "token.l"
 #define INITIAL 0
-#line 2 "filename.l"
-
+#line 2 "token.l"
 #undef yywrap
 #define yywrap() 1 
 int f1=0,f2=0;
 char oper;
 float op1=0,op2=0,ans=0;
 void eval();
-
-#line 377 "lex.yy.c"
+int count = 0;
+#line 376 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -524,10 +523,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 16 "filename.l"
+#line 15 "token.l"
 
 
-#line 531 "lex.yy.c"
+#line 530 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -612,7 +611,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 18 "filename.l"
+#line 17 "token.l"
 {
 	if(f1==0)
 	{
@@ -637,7 +636,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 40 "filename.l"
+#line 39 "token.l"
 {
 	
 	oper=(char) *yytext;
@@ -646,7 +645,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 46 "filename.l"
+#line 45 "token.l"
 {
 
 	if(f1==1 && f2==1)
@@ -659,10 +658,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 56 "filename.l"
+#line 55 "token.l"
 ECHO;
 	YY_BREAK
-#line 666 "lex.yy.c"
+#line 665 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1548,13 +1547,15 @@ int main()
 	return 0;
 	}
 #endif
-#line 56 "filename.l"
+#line 55 "token.l"
 
 
 
 main()
 {
 	yylex();
+	printf("\n total no. of token = %d\n", count);
+	return 1;
 }
 
 
@@ -1564,14 +1565,17 @@ void eval()
 	{
 		case '+':
 			ans=op1+op2;
+			count++;
 			break;
 
 		case '-':
 			ans=op1-op2;
+			count++;
 			break;
 
 		case '*':
 			ans=op1*op2;
+			count++;
 			break;
 
 		case '/':
@@ -1583,11 +1587,14 @@ void eval()
 			else
 			{
 				ans=op1/op2;
+				count++;
 			}
 			break;
 		default:
 			printf("operation not available");
+			count++;
 			break;
 	}
 	printf("The answer is = %lf",ans);
+
 }
