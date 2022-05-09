@@ -1,97 +1,41 @@
 %{
-
+	/*To find whether given letter is a vowel or not*/
 #undef yywrap
-#define yywrap() 1 
-int f1=0,f2=0;
-char oper;
-float op1=0,op2=0,ans=0;
-void eval();
-
+#define yywrap() 1
+	void display(int);
+	int n = 0;
 %}
 
-DIGIT [0-9]
-NUM {DIGIT}+(\.{DIGIT}+)?
-OP [*/+-]
-
 %%
 
-{NUM} {
-	if(f1==0)
-	{
-		op1=atof(yytext);
-		f1=1;
+[a|e|i|o|u|] {
+		int flag=1;
+		display(flag);
+		return;
+		}
+
+.+ {
+	int flag=0;
+	display(flag);
+	return;
 	}
-
-	else if(f2==-1)
-	{
-		op2=atof(yytext);
-		f2=1;
-	}
-
-	if((f1==1) && (f2==1))
-	{
-		eval();
-		f1=0;
-		f2=0;
-
-	}
-}
-
-{OP} {
 	
-	oper=(char) *yytext;
-	f2=-1;
-}
-
-[\n] {
-
-	if(f1==1 && f2==1)
-	{	
-		eval;
-		f1=0;
-		f2=0;
-	}
-}	
-
 %%
 
+void display(int flag)
+{
+	if(flag==1)
+		printf("The given letter [%s] is a vowel",yytext, n++);
+		
+	else
+		printf("The given letter [%s] is NOT a vowel",yytext, n++);		
+		
+}
 
 main()
 {
-	yylex();
-}
-
-
-void eval()
-{
-	switch(oper)
-	{
-		case '+':
-			ans=op1+op2;
-			break;
-
-		case '-':
-			ans=op1-op2;
-			break;
-
-		case '*':
-			ans=op1*op2;
-			break;
-
-		case '/':
-			if(op2==0)
-			{
-				printf("ERROR");
-				return;
-			}
-			else
-			{
-				ans=op1/op2;
-			}
-			break;
-		default:
-			printf("operation not available");
-			break;
-	}
-	printf("The answer is = %lf",ans);
+	printf("Enter a letter to check if it is a vowel or not");
+	yylex(); 
+	printf("\n total no. of token = %d\n", n);
+	return 1;
 }
